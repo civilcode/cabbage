@@ -33,8 +33,8 @@ defmodule Cabbage.CucumberExpressionsTest do
   end
 
   defthen ~r/^Named captures are of expected type$/, _, %{count: count, quantity: quantity, word_count: word_count, matched_str: matched_str} do
-    assert count == "1"
-    assert quantity == "1.0"
+    assert count == 1
+    assert quantity == 1.0
     assert word_count == "one"
     assert matched_str == "\"one simple\""
     {:ok, %{}}

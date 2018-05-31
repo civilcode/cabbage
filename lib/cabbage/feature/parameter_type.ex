@@ -10,3 +10,13 @@ defmodule Cabbage.Feature.ParameterType do
     ]
   end
 end
+
+defmodule Cabbage.Feature.MaybeNumber do
+  def parse(str) do
+    cond do
+      Regex.match?(~r/^\d+$/, str) -> String.to_integer(str)
+      Regex.match?(~r/^\d+\.\d+$/, str) -> String.to_float(str)
+      true -> str
+    end
+  end
+end

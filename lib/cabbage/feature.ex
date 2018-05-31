@@ -243,8 +243,16 @@ defmodule Cabbage.Feature do
     expression
     |> Cabbage.Feature.CucumberExpressions.to_regex()
     |> Regex.named_captures(step_text)
-    |> Enum.map(fn {k, v} -> {String.to_atom(k), v} end)
+    |> Enum.map(&convert_types(&1, expression))
     |> Enum.into(%{})
+  end
+
+  defp convert_types({k, v}, expression) when is_binary(expression) do
+    {String.to_atom(k), Cabbage.Feature.MaybeNumber.parse(v)}
+  end
+
+  defp convert_types({k, v}, _expression) do
+    {String.to_atom(k), v}
   end
 
   @doc """
